@@ -6,7 +6,17 @@ class Chef
       banner "knife sous list"
 
       def run
-        puts "hello world"
+        print_nodes
+      end
+
+      def print_nodes
+        nodes.each do |node|
+          ui.msg node.name
+        end
+      end
+
+      def nodes
+
       end
     end
   end
