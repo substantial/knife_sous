@@ -27,42 +27,38 @@ describe KnifeSous::ProcessorCommand do
 
   describe "#process_config" do
     it "should validate the config" do
-      processor.should_receive(:validate_config)
+      processor.should_receive(:validate_config!)
       processor.process_config
     end
 
     it "should evalute the config file if config is valid" do
-      processor.stub(validate_config: true)
+      processor.stub(:validate_config!)
       File.stub(read: 'config contents' )
       processor.should_receive(:instance_eval).with('config contents')
-      processor.process_config
-    end
-
-    it "shouldn't evaluate the config if it isn't valid" do
-      processor.stub(validate_config: false)
-      processor.should_not_receive(:instance_eval)
       processor.process_config
     end
   end
 
   describe "#validate_config" do
-    it "should print error if file doesn't exist and return false" do
+    it "should print error and exit if file doesn't exist" do
       File.stub(exists?: false)
-      processor.ui.should_receive(:error).with("Can't find some config")
-      processor.validate_config("some config").should be_false
+      processor.stub(config_file_path: 'some config path' )
+      processor.ui.should_receive(:fatal).with("Couldn't find some config path")
+      lambda { processor.validate_config! }.should raise_error SystemExit
     end
 
     it "should print error if file exists but isn't readable and return false" do
       File.stub(exists?: true)
       File.stub(readable?: false)
-      processor.ui.should_receive(:error).with("Can't read some config")
-      processor.validate_config("some config").should be_false
+      processor.stub(config_file_path: 'some config path' )
+      processor.ui.should_receive(:fatal).with("Can't read some config path")
+      lambda { processor.validate_config! }.should raise_error SystemExit
     end
 
     it "should return true if file exists and is readable" do
       File.stub(exists?: true)
       File.stub(readable?: true)
-      processor.validate_config("some config").should be_true
+      processor.validate_config!.should be_true
     end
   end
 
