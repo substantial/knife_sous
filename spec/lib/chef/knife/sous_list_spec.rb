@@ -11,8 +11,9 @@ describe Chef::Knife::SousList do
 
   describe "#run" do
     it "should print out the list nodes" do
-      cmd = command
-      cmd.should_receive(:print_nodes)
+      cmd = command('--node-config-file', "spec/support/fixtures/nodes.rb")
+      cmd.stub(nodes: 'nodes')
+      cmd.ui.should_receive(:output).with('nodes')
       cmd.run
     end
   end
