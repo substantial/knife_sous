@@ -1,3 +1,5 @@
+require 'knife_sous/namespace_builder'
+
 module KnifeSous
   module ProcessorCommand
     def self.included(other)
