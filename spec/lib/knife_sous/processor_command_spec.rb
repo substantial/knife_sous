@@ -62,6 +62,12 @@ describe KnifeSous::ProcessorCommand do
     end
   end
 
+  describe "#config_file_path" do
+    it "should return the full path to the config file" do
+      processor.config_file_path.should == File.expand_path(File.join(Dir.pwd, 'nodes', 'nodes.rb' ))
+    end
+  end
+
   def command(*args)
     knife_command(DummyCommand, *args)
   end
