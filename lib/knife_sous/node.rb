@@ -2,9 +2,8 @@ module KnifeSous
   class Node
     attr_reader :name
 
-    def initialize(name, &block)
+    def initialize(name)
       @name = name
-      instance_eval &block
     end
 
     def node_config(*args)

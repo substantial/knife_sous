@@ -2,15 +2,8 @@ require 'spec_helper'
 
 describe KnifeSous::Node do
   describe "#initialize" do
-    let(:node_config_block) { Proc.new { 'node config stuff' } }
-
     it "should set the name that was passed in" do
-      KnifeSous::Node.new('Node-Fuu', &node_config_block).name.should == 'Node-Fuu'
-    end
-
-    it "should evaluate the the block passed in" do
-      KnifeSous::Node.any_instance.should_receive(:instance_eval).with(&node_config_block)
-      KnifeSous::Node.new('Node-Fuu', &node_config_block)
+      KnifeSous::Node.new('Node-Fuu').name.should == 'Node-Fuu'
     end
   end
 
