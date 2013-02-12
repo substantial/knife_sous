@@ -1,15 +1,16 @@
-require 'forwardable'
+require 'knife_sous/node'
+
+require 'knife_sous/dsl_definitions'
+
 
 module KnifeSous
   class Namespace
-    extend Forwardable
+    include DSL
 
     attr_reader :name
-    def_delegators :@children, :<<, :map, :each, :first, :[]
 
     def initialize(name)
       @name = name
-      @children = []
     end
   end
 end
