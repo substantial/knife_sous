@@ -29,7 +29,7 @@ module KnifeSous
 
     def process_config
       validate_config!
-      root_namespace = Namespace.new('root')
+      root_namespace = Namespace.new('')
       root_namespace.instance_eval File.read(config_file_path)
       root_namespace
     end

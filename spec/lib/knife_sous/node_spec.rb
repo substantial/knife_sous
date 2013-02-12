@@ -5,10 +5,21 @@ describe KnifeSous::Node do
     it "should set the name that was passed in" do
       KnifeSous::Node.new('Node-Fuu').name.should == 'Node-Fuu'
     end
+
+    it "should convert symbols to strings" do
+      KnifeSous::Node.new(:node_tastic).name.should == 'node_tastic'
+    end
   end
 
-  it_should_behave_like "a dsl wrapper" do
+  it_should_behave_like "dsl wrapper" do
     let(:klass) { KnifeSous::Node.new('Node-Fuu') }
+  end
+
+  describe "#present" do
+    it "should return the name" do
+      node = KnifeSous::Node.new('Node-Fuu')
+      node.present.should == "Node-Fuu\n"
+    end
   end
 
   describe "#node_config" do

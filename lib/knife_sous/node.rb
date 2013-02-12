@@ -7,7 +7,11 @@ module KnifeSous
     attr_reader :name
 
     def initialize(name)
-      @name = name
+      @name = name.to_s
+    end
+
+    def present
+      "#{@name}\n"
     end
 
     def node_config(*args)

@@ -1,4 +1,4 @@
-shared_examples_for "a dsl wrapper" do
+shared_examples_for "dsl wrapper" do
   describe "#evaluate_block" do
     it "should execute blocks in the class' context" do
       test_block = Proc.new { foo 'bar'}

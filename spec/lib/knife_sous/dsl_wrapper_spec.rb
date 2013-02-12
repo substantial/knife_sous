@@ -5,7 +5,7 @@ class DummyClass
 end
 
 describe KnifeSous::DSLWrapper do
-  it_should_behave_like "a dsl wrapper" do
+  it_should_behave_like "dsl wrapper" do
     let(:klass) { DummyClass.new }
   end
 end
