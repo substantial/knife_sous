@@ -9,11 +9,15 @@ class Chef
       banner "knife sous list"
 
       def run
-        ui.output(nodes)
+        present_nodes
       end
 
       def nodes
         @nodes ||= process_config
+      end
+
+      def present_nodes
+        ui.output(nodes.present)
       end
     end
   end
