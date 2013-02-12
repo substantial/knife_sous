@@ -7,6 +7,10 @@ describe KnifeSous::Node do
     end
   end
 
+  it_should_behave_like "a dsl wrapper" do
+    let(:klass) { KnifeSous::Node.new('Node-Fuu') }
+  end
+
   describe "#node_config" do
     it "should set the node_config " do
       node = KnifeSous::Node.new('Node-Fuu')
