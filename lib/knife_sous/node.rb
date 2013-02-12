@@ -1,5 +1,9 @@
+require 'knife_sous/dsl_wrapper'
+
 module KnifeSous
   class Node
+    include DSLWrapper
+
     attr_reader :name
 
     def initialize(name)

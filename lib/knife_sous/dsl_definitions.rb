@@ -1,6 +1,8 @@
+require 'knife_sous/namespace'
+require 'knife_sous/node'
+
 module KnifeSous
   module DSL
-
     def self.included(base)
       base.class_eval do
         base.extend Forwardable
@@ -14,13 +16,13 @@ module KnifeSous
 
     def namespace(name, &block)
       namespace = Namespace.new(name)
-      namespace.instance_eval(&block)
+      namespace.evaluate_block(&block)
       children << namespace
     end
 
     def node(name, &block)
       node = Node.new(name)
-      node.instance_eval(&block)
+      node.evaluate_block(&block)
       children << node
     end
   end

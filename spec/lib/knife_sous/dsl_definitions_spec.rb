@@ -10,7 +10,7 @@ describe KnifeSous::DSL do
   end
 
   describe "#namespace" do
-    let(:some_block) { Proc.new { 'unicorns' } }
+    let(:some_block) { Proc.new { } }
     let(:dummy_class) { DummyClass.new }
 
     it "should instantiate a Namespace" do
@@ -20,10 +20,10 @@ describe KnifeSous::DSL do
       dummy_class.namespace('some name', &some_block)
     end
 
-    it "should have the Namespace instance_eval a passed in block" do
+    it "should have the Namespace evaluate the passed in block" do
       namespace = KnifeSous::Namespace.new('stuff')
       KnifeSous::Namespace.stub(new: namespace)
-      namespace.should_receive(:instance_eval).with(&some_block)
+      namespace.should_receive(:evaluate_block).with(&some_block)
       dummy_class.namespace('some name', &some_block)
     end
 
@@ -34,20 +34,20 @@ describe KnifeSous::DSL do
   end
 
   describe "#node" do
-    let(:some_block) { Proc.new { 'unicorns' } }
+    let(:some_block) { Proc.new { } }
     let(:dummy_class) { DummyClass.new }
 
     it "should instantiate a Node" do
       node = KnifeSous::Node.new('stuff')
       KnifeSous::Node.stub(new: node)
-      KnifeSous::Node.should_receive(:new).with('some name', &some_block)
+      KnifeSous::Node.should_receive(:new).with('some name')
       dummy_class.node('some name', &some_block)
     end
 
-    it "should have the Node instance_eval a passed in block" do
+    it "should have the Node evaluate the passed in block" do
       node = KnifeSous::Node.new('stuff')
       KnifeSous::Node.stub(new: node)
-      node.should_receive(:instance_eval).with(&some_block)
+      node.should_receive(:evaluate_block).with(&some_block)
       dummy_class.node('some name', &some_block)
     end
 
