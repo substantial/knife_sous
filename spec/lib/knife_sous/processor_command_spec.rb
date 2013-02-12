@@ -26,16 +26,26 @@ describe KnifeSous::ProcessorCommand do
   end
 
   describe "#process_config" do
+    let(:namespace) { KnifeSous::Namespace.new('root') }
+
+    before do
+      namespace.stub(:instance_eval)
+      KnifeSous::Namespace.stub(new: namespace )
+    end
+
     it "should validate the config" do
       processor.should_receive(:validate_config!)
       processor.process_config
     end
 
-    it "should evalute the config file if config is valid" do
+    it "should create and return root namespace and evaluate the config if file is valid" do
       processor.stub(:validate_config!)
       File.stub(read: 'config contents' )
-      processor.should_receive(:instance_eval).with('config contents')
-      processor.process_config
+      namespace.should_receive(:instance_eval).with('config contents')
+
+      root_namespace = processor.process_config
+      root_namespace.should be_a KnifeSous::Namespace
+      root_namespace.name.should == 'root'
     end
   end
 

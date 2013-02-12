@@ -9,7 +9,7 @@ describe KnifeSous::Node do
 
   describe "#node_config" do
     it "should set the node_config " do
-      node = KnifeSous::Node.new('Node-Fuu') do end
+      node = KnifeSous::Node.new('Node-Fuu')
       node.node_config('node config stuff')
       node.node_config.should == 'node config stuff'
     end
@@ -17,7 +17,7 @@ describe KnifeSous::Node do
 
   describe "#ssh_config" do
     it "should set the ssh config" do
-      node = KnifeSous::Node.new('Node-Fuu') do end
+      node = KnifeSous::Node.new('Node-Fuu')
       node.ssh_config('node config stuff')
       node.ssh_config.should == 'node config stuff'
     end
