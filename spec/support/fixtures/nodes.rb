@@ -7,8 +7,8 @@ namespace :production do
   end
 end
 
-node :vagrant do
-  node_config 'nodes/some_node.json'
-  ssh_config 'vagrant config'
+node :vagrant do |n|
+  n.node_config 'nodes/some_node.json'
+  n.ssh_config 'vagrant config'
 end
 
