@@ -10,10 +10,6 @@ module KnifeSous
       @name = name.to_s
     end
 
-    def present
-      "#{@name}\n"
-    end
-
     def node_config(*args)
       if args.length == 1
         @node_config = args.first

@@ -15,13 +15,6 @@ describe KnifeSous::Node do
     let(:klass) { KnifeSous::Node.new('Node-Fuu') }
   end
 
-  describe "#present" do
-    it "should return the name" do
-      node = KnifeSous::Node.new('Node-Fuu')
-      node.present.should == "Node-Fuu\n"
-    end
-  end
-
   describe "#node_config" do
     it "should set the node_config " do
       node = KnifeSous::Node.new('Node-Fuu')
