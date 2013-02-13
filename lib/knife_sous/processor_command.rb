@@ -24,11 +24,11 @@ module KnifeSous
     end
 
     def search(target)
-      nodes.select!{|node| node.name == target}
+      root_namespace.select!{|item| item.name == target}
     end
 
-    def nodes
-      @nodes ||= process_config
+    def root_namespace
+      @root_namespace ||= process_config
     end
 
     def config_file_path

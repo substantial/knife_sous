@@ -14,14 +14,6 @@ module KnifeSous
     def initialize(name)
       @name = name.to_s
     end
-
-    def present
-      nodes = @name
-      children.each do |n|
-        nodes = "#{nodes} #{n.present}"
-      end
-      nodes
-    end
   end
 end
 

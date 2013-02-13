@@ -20,15 +20,5 @@ describe KnifeSous::Namespace do
       KnifeSous::Namespace.new(:foo_bar).name.should == 'foo_bar'
     end
   end
-
-  describe "#present" do
-    it "should return the name" do
-      namespace.present.should == "some namespace name"
-    end
-
-    it "should present all children" do
-      namespace.present
-    end
-  end
 end
 

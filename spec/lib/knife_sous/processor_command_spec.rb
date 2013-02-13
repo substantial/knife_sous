@@ -78,18 +78,19 @@ describe KnifeSous::ProcessorCommand do
     end
   end
 
-  describe "#nodes" do
+  describe "#root_namespace" do
     it "should process_config" do
       processor.should_receive(:process_config)
-      processor.nodes
+      processor.root_namespace
     end
   end
 
   describe "#search" do
     it "should return the target" do
       nodeA = KnifeSous::Node.new("some node")
-      nodes = [ nodeA, KnifeSous::Namespace.new("some Namespace") ]
-      processor.stub(nodes: nodes)
+      root_namespace = KnifeSous::Namespace.new("root namespace")
+      root_namespace << KnifeSous::Namespace.new("some Namespace") << nodeA
+      processor.stub(root_namespace: root_namespace)
       processor.search("some node").should == [nodeA]
     end
   end
