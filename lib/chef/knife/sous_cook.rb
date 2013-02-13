@@ -6,16 +6,15 @@ class Chef
     class SousCook < Knife
       include KnifeSous::ProcessorCommand
 
-      banner "knife sous cook NODE"
+      banner "knife sous cook [NAMESPACE] NODE"
 
       def run
-        unless name_args.size == 1
-          puts "You need to say specificy a node or namespace"
+        unless name_args.size > 0
+          puts "You need to specificy a node or namespace"
           show_usage
           exit 1
         end
-        target = name_args.first
-        # result = search(target)
+        result = search(name_args)
       end
     end
   end

@@ -23,8 +23,13 @@ module KnifeSous
       true
     end
 
-    def search(target)
-      root_namespace.select!{|item| item.name == target}
+    def search(target_qualifiers = [])
+      namespace = root_namespace
+      target_qualifiers.each do |target_qualifier|
+        return nil if namespace.nil?
+        namespace = namespace.keep_if { |item| item.name == target_qualifier }.first
+      end
+      namespace
     end
 
     def root_namespace

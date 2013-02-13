@@ -6,7 +6,7 @@ module KnifeSous
     def self.included(base)
       base.class_eval do
         base.extend Forwardable
-        def_delegators :children, :<<, :first, :[], :map, :each, :to_a, :select, :select!
+        def_delegators :children, :<<, :first, :[], :map, :each, :to_a, :select, :select!, :keep_if, :empty?
       end
     end
 

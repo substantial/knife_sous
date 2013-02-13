@@ -5,7 +5,7 @@ describe Chef::Knife::SousCook do
 
   describe "#banner" do
     it "should have display how to use command" do
-      command.banner.should == 'knife sous cook NODE'
+      command.banner.should == 'knife sous cook [NAMESPACE] NODE'
     end
   end
 

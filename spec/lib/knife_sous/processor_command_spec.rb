@@ -86,12 +86,46 @@ describe KnifeSous::ProcessorCommand do
   end
 
   describe "#search" do
-    it "should return the target" do
-      nodeA = KnifeSous::Node.new("some node")
-      root_namespace = KnifeSous::Namespace.new("root namespace")
-      root_namespace << KnifeSous::Namespace.new("some Namespace") << nodeA
+    let(:root_namespace) { KnifeSous::Namespace.new("root_namespace") }
+    let(:nodeA) { KnifeSous::Node.new("nodeA") }
+
+    before do
       processor.stub(root_namespace: root_namespace)
-      processor.search("some node").should == [nodeA]
+    end
+
+    it "should return the target" do
+      root_namespace << nodeA
+      processor.search(%w[nodeA]).should == nodeA
+    end
+
+    it "should return a namespace if target" do
+      foo_space = KnifeSous::Namespace.new("foo")
+      bar_space = KnifeSous::Namespace.new("bar")
+      baz_space = KnifeSous::Namespace.new("baz")
+      root_namespace << foo_space
+      foo_space << bar_space
+      bar_space << baz_space
+      processor.search(%w[foo bar baz]).should == baz_space
+    end
+
+    context do
+      before do
+        other_namespace = KnifeSous::Namespace.new("other_namespace")
+        other_namespace << nodeA
+        root_namespace << other_namespace
+      end
+
+      it "shouldn't return nodes, unless fully qualified" do
+          processor.search(%w[nodeA other_namespace]).should == nil
+      end
+
+      it "shouldn't return nodes, unless fully qualified" do
+          processor.search(%w[nodeA]).should == nil
+      end
+
+      it "should require qualified namespaces" do
+        processor.search(%w[other_namespace nodeA]).should == nodeA
+      end
     end
   end
 
