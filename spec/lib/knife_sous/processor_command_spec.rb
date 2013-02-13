@@ -78,6 +78,22 @@ describe KnifeSous::ProcessorCommand do
     end
   end
 
+  describe "#nodes" do
+    it "should process_config" do
+      processor.should_receive(:process_config)
+      processor.nodes
+    end
+  end
+
+  describe "#search" do
+    it "should return the target" do
+      nodeA = KnifeSous::Node.new("some node")
+      nodes = [ nodeA, KnifeSous::Namespace.new("some Namespace") ]
+      processor.stub(nodes: nodes)
+      processor.search("some node").should == [nodeA]
+    end
+  end
+
   def command(*args)
     knife_command(DummyCommand, *args)
   end

@@ -12,10 +12,6 @@ class Chef
         present_nodes
       end
 
-      def nodes
-        @nodes ||= process_config
-      end
-
       def present_nodes
         ui.output(nodes.present)
       end

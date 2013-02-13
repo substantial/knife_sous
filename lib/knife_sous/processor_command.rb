@@ -23,6 +23,14 @@ module KnifeSous
       true
     end
 
+    def search(target)
+      nodes.select!{|node| node.name == target}
+    end
+
+    def nodes
+      @nodes ||= process_config
+    end
+
     def config_file_path
       @config_file_path ||= File.expand_path(File.join(Dir.pwd, config[:node_config]))
     end
