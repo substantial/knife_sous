@@ -7,7 +7,7 @@ namespace :production do
   end
 end
 
-namespace :vagrant do
+node :vagrant do
   node_config 'nodes/some_node.json'
   ssh_config 'vagrant config'
 end

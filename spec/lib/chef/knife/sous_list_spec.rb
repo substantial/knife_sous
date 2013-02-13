@@ -11,10 +11,22 @@ describe Chef::Knife::SousList do
 
   describe "#run" do
     it "should print out the list nodes" do
-      cmd = command('--node-config-file', "spec/support/fixtures/nodes.rb")
-      cmd.stub(nodes: 'nodes')
-      cmd.ui.should_receive(:output).with('nodes')
+      cmd = command
+      cmd.should_receive(:present_nodes)
       cmd.run
+    end
+  end
+
+  describe "#present_nodes" do
+    it "should output presented nodes" do
+      cmd = command
+      cmd.stub(root_namespace: 'fake root namespace')
+      presenter = mock('presenter')
+      presenter.stub(present: 'pretty, presented nodes')
+      KnifeSous::NamespacePresenter.stub(new: presenter)
+      KnifeSous::NamespacePresenter.should_receive(:new).with('fake root namespace')
+      cmd.ui.should_receive(:output).with('pretty, presented nodes')
+      cmd.present_nodes
     end
   end
 
