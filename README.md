@@ -34,9 +34,9 @@ namespace :production do
   end
 end
 
-namespace :vagrant do
-  node_config 'nodes/some_node.json'
-  ssh_config `vagrant ssh-config`
+node :vagrant do |n|
+  n.node_config 'nodes/some_node.json'
+  n.ssh_config `vagrant ssh-config`
 end
 
 ```
