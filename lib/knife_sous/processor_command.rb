@@ -1,4 +1,4 @@
-require 'knife_sous/namespace_builder'
+require 'knife_sous/namespace'
 
 module KnifeSous
   module ProcessorCommand
@@ -29,7 +29,9 @@ module KnifeSous
 
     def process_config
       validate_config!
-      instance_eval File.read(config_file_path)
+      root_namespace = Namespace.new('')
+      root_namespace.instance_eval File.read(config_file_path)
+      root_namespace
     end
   end
 end
