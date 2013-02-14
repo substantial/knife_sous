@@ -15,19 +15,23 @@ describe KnifeSous::Node do
     let(:klass) { KnifeSous::Node.new('Node-Fuu') }
   end
 
-  describe "#node_config" do
-    it "should set the node_config " do
-      node = KnifeSous::Node.new('Node-Fuu')
-      node.node_config('node config stuff')
-      node.node_config.should == 'node config stuff'
+  describe "#chef_node_name" do
+    it "should return the node name" do
+      node = KnifeSous::Node.new("Node-Fuu")
+      node.chef_node_name.should == 'Node-Fuu'
     end
   end
 
-  describe "#ssh_config_file" do
-    it "should set the ssh config file" do
-      node = KnifeSous::Node.new('Node-Fuu')
-      node.ssh_config_file('node config stuff')
-      node.ssh_config_file.should == 'node config stuff'
+  describe "node configuration" do
+    let(:node) { KnifeSous::Node.new("Node-Fuu") }
+
+    NODE_METHODS = %w[node_config ssh_config_file]
+
+    NODE_METHODS.each do |method|
+      it "should set the #{method}" do
+        node.send(method, 'node config stuff')
+        node.send(method).should == 'node config stuff'
+      end
     end
   end
 end
