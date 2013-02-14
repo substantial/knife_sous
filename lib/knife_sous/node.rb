@@ -1,35 +1,28 @@
 require 'knife_sous/dsl_wrapper'
+require 'knife_sous/mixins/hash_mixins'
 
 module KnifeSous
   class Node
-    include DSLWrapper
+    include KnifeSous::HashMixins
 
-    attr_reader :name
+    attr_reader :name, :config
 
-    CONFIG_OPTIONS = %w[node_config ssh_config_file ssh_port ssh_user
-identity_file hostname user ssh_password]
-
-    def initialize(name)
+    def initialize(name, config_args={})
       @name = name.to_s
+      @config = {}
+      update_config(config_args)
     end
 
-    def node_name(arg = nil)
-      unless arg.nil?
-        @node_name = arg.to_s
-      else
-        @node_name || @name
-      end
+    def update_config(other_config={})
+      @config.merge!(normalize_hash(other_config))
     end
 
-    CONFIG_OPTIONS.each do |method|
-      instance_var = "@#{method}".to_sym
-      define_method method do |arg = nil|
-        unless arg.nil?
-          instance_variable_set(instance_var, arg.to_s)
-        else
-          instance_variable_get(instance_var)
-        end
-      end
+    def node_name
+      @config[:node_name] || @name
+    end
+
+    def method_missing(method_name, *args, &block)
+      @config[method_name.to_sym]
     end
   end
 end
