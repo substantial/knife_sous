@@ -89,6 +89,10 @@ describe Chef::Knife::SousCook do
     before do
       Chef::Knife::SoloCook.stub(new: solo_cook_command)
       solo_cook_command.stub(:run)
+      node.evaluate_block do |n|
+        n.node_config "node config"
+        n.ssh_config "node ssh_config"
+      end
     end
 
     it "should instantiate a Solo Cook command" do
@@ -98,7 +102,6 @@ describe Chef::Knife::SousCook do
 
     it "should configure the Solo Cook command" do
       node.stub(ssh_config: 'node ssh_config')
-      node.stub(node_config: 'node config')
 
       solo_cook_command.should_receive(:run)
       cmd.solo_cook_node(node)
