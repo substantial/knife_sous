@@ -44,7 +44,7 @@ module KnifeSous
     def process_config
       validate_config!
       root_namespace = Namespace.new('')
-      root_namespace.instance_eval(File.read(manifest_file_path))
+      root_namespace.instance_eval(File.read(manifest_file_path), manifest_file_path)
       root_namespace
     end
   end

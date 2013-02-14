@@ -41,7 +41,8 @@ describe KnifeSous::ProcessorCommand do
     it "should create and return root namespace and evaluate the config if file is valid" do
       processor.stub(:validate_config!)
       File.stub(read: 'config contents' )
-      namespace.should_receive(:instance_eval).with('config contents')
+      processor.stub(manifest_file_path: 'some config path' )
+      namespace.should_receive(:instance_eval).with('config contents', 'some config path')
 
       processor.process_config.should be_a KnifeSous::Namespace
     end
