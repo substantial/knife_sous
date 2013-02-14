@@ -89,27 +89,14 @@ describe Chef::Knife::SousCook do
     before do
       Chef::Knife::SoloCook.stub(new: solo_cook_command)
       solo_cook_command.stub(:run)
-      node.evaluate_block do |n|
-        n.node_config "node config"
-        n.ssh_config "node ssh_config"
-      end
+      cmd.stub(configure_command: solo_cook_command)
     end
 
-    it "should instantiate a Solo Cook command" do
-      Chef::Knife::SoloCook.should_receive(:new)
-      cmd.solo_cook_node(node)
-    end
-
-    it "should configure the Solo Cook command" do
-      node.stub(ssh_config: 'node ssh_config')
-
+    it "should provide name to args and run" do
       solo_cook_command.should_receive(:run)
       cmd.solo_cook_node(node)
 
       solo_cook_command.name_args.should == %w[nodetastic]
-      solo_cook_command.config[:ssh_config].should == 'node ssh_config'
-      solo_cook_command.config[:node_config].should == 'node config'
-      solo_cook_command.config[:chef_node_name].should == 'nodetastic'
     end
   end
 

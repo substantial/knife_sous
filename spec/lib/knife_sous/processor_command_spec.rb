@@ -10,7 +10,7 @@ describe KnifeSous::ProcessorCommand do
   let(:processor) { command }
 
   before do
-    processor.stub(:evaluate_block)
+    processor.stub(:instance_eval)
     File.stub(:read)
   end
 
@@ -30,7 +30,7 @@ describe KnifeSous::ProcessorCommand do
 
     before do
       KnifeSous::Namespace.stub(new: namespace )
-      namespace.stub(:evaluate_block)
+      namespace.stub(:instance_eval)
     end
 
     it "should validate the config" do
@@ -41,7 +41,7 @@ describe KnifeSous::ProcessorCommand do
     it "should create and return root namespace and evaluate the config if file is valid" do
       processor.stub(:validate_config!)
       File.stub(read: 'config contents' )
-      namespace.should_receive(:evaluate_block).with('config contents')
+      namespace.should_receive(:instance_eval).with('config contents')
 
       processor.process_config.should be_a KnifeSous::Namespace
     end
