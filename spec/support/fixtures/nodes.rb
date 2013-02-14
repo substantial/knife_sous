@@ -1,20 +1,20 @@
-namespace :production do
-  namespace :web do
-    node :nodetastic do |n|
-      n.hostname "12.34.56.789"
-      default_options(n)
-    end
+def default_options(node)
+  {
+    node_config: "nodes/some_node.json",
+    ssh_port: 22,
+    identity_file: "path/to/identity/file"
+  }
+end
+
+namespace :production do |prod|
+  prod.node :node_awesome, default_options.merge!(hostname: '00.12.34.56')
+  prod.namespace :web do |web|
+    web.node :nodetastic,
+      hostname: "12.34.56.789",
+      ssh_port: 22,
+      identity_file: "path/to/identity"
   end
 end
 
-node :vagrant do |n|
-  n.node_config 'nodes/some_node.json'
-  n.ssh_config 'vagrant config'
-end
-
-def default_options(node)
-  node.node_config "nodes/some_node.json"
-  node.ssh_port 22
-  node.identity_file "path/to/identity/file"
-end
+node :vagrant, node_config: 'nodes/some_node.json', ssh_config: 'vagrant config'
 
