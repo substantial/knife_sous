@@ -10,10 +10,13 @@ describe KnifeSous::HashMixins do
     end
   end
 
-  describe "#normalize_keys" do
-    it "should sanitize each keys for a hash" do
-      subject.normalize_keys('GroS-key' => 'foo', OtherKey: 'bar').should == {
-        gros_key: 'foo', otherkey: 'bar' }
+  describe "#normalize_hash" do
+    it "should sanitize each key" do
+      subject.normalize_hash('GroS-key' => 'foo', OtherKey: 'bar').keys.should =~ [:gros_key, :otherkey]
+    end
+
+    it "should convert every value to string" do
+      subject.normalize_hash(number: 5, bar: 'baz').should == { number: '5', bar: 'baz' }
     end
   end
 end

@@ -3,8 +3,8 @@ module KnifeSous
 
     module_function
 
-    def normalize_keys(hash)
-      Hash[hash.map{ |k, v| [sanitize_key(k), v] }]
+    def normalize_hash(hash)
+      Hash[hash.map{ |k, v| [sanitize_key(k), v.to_s] }]
     end
 
     def sanitize_key(key)
