@@ -92,6 +92,7 @@ describe Chef::Knife::SousCook do
       cmd.stub(configure_command: solo_cook_command)
       node.evaluate_block do
         node_config '/path/to/node/config'
+        hostname 'host_ip'
       end
     end
 
