@@ -10,18 +10,18 @@ describe KnifeSous::ProcessorCommand do
   let(:processor) { command }
 
   before do
-    processor.stub(:instance_eval)
+    processor.stub(:evaluate_block)
     File.stub(:read)
   end
 
   describe "options" do
     it "should set the default node config path" do
-      processor.config[:node_config].should == "nodes/nodes.rb"
+      processor.default_config[:node_manifest_file].should == "nodes/nodes.rb"
     end
 
     it "should replace node config path with option argument" do
-      cmd = command("--node-config-file=some/node/thing")
-      cmd.config[:node_config].should == "some/node/thing"
+      cmd = command("--node-manifest-file=some/node/thing")
+      cmd.config[:node_manifest_file].should == "some/node/thing"
     end
   end
 
@@ -29,8 +29,8 @@ describe KnifeSous::ProcessorCommand do
     let(:namespace) { KnifeSous::Namespace.new('root') }
 
     before do
-      namespace.stub(:instance_eval)
       KnifeSous::Namespace.stub(new: namespace )
+      namespace.stub(:evaluate_block)
     end
 
     it "should validate the config" do
@@ -41,18 +41,16 @@ describe KnifeSous::ProcessorCommand do
     it "should create and return root namespace and evaluate the config if file is valid" do
       processor.stub(:validate_config!)
       File.stub(read: 'config contents' )
-      namespace.should_receive(:instance_eval).with('config contents')
+      namespace.should_receive(:evaluate_block).with('config contents')
 
-      root_namespace = processor.process_config
-      root_namespace.should be_a KnifeSous::Namespace
-      root_namespace.name.should == 'root'
+      processor.process_config.should be_a KnifeSous::Namespace
     end
   end
 
   describe "#validate_config" do
     it "should print error and exit if file doesn't exist" do
       File.stub(exists?: false)
-      processor.stub(config_file_path: 'some config path' )
+      processor.stub(manifest_file_path: 'some config path' )
       processor.ui.should_receive(:fatal).with("Couldn't find some config path")
       lambda { processor.validate_config! }.should raise_error SystemExit
     end
@@ -60,7 +58,7 @@ describe KnifeSous::ProcessorCommand do
     it "should print error if file exists but isn't readable and return false" do
       File.stub(exists?: true)
       File.stub(readable?: false)
-      processor.stub(config_file_path: 'some config path' )
+      processor.stub(manifest_file_path: 'some config path' )
       processor.ui.should_receive(:fatal).with("Can't read some config path")
       lambda { processor.validate_config! }.should raise_error SystemExit
     end
@@ -72,9 +70,9 @@ describe KnifeSous::ProcessorCommand do
     end
   end
 
-  describe "#config_file_path" do
+  describe "#manfiest_file_patch" do
     it "should return the full path to the config file" do
-      processor.config_file_path.should == File.expand_path(File.join(Dir.pwd, 'nodes', 'nodes.rb' ))
+      processor.manifest_file_path.should == File.expand_path(File.join(Dir.pwd, 'nodes', 'nodes.rb' ))
     end
   end
 
