@@ -90,10 +90,10 @@ describe Chef::Knife::SousCook do
       Chef::Knife::SoloCook.stub(new: solo_cook_command)
       solo_cook_command.stub(:run)
       cmd.stub(configure_command: solo_cook_command)
-      node.evaluate_block do
-        node_config '/path/to/node/config'
-        hostname 'host_ip'
-      end
+      node.update_config(
+        node_config: '/path/to/node/config',
+        hostname: 'host_ip'
+      )
     end
 
     it "should provide name to args and run" do
