@@ -34,25 +34,17 @@ describe KnifeSous::DSL do
   end
 
   describe "#node" do
-    let(:some_block) { Proc.new { } }
     let(:dummy_class) { DummyClass.new }
 
     it "should instantiate a Node" do
       node = KnifeSous::Node.new('stuff')
       KnifeSous::Node.stub(new: node)
-      KnifeSous::Node.should_receive(:new).with('some name')
-      dummy_class.node('some name', &some_block)
-    end
-
-    it "should have the Node evaluate the passed in block" do
-      node = KnifeSous::Node.new('stuff')
-      KnifeSous::Node.stub(new: node)
-      node.should_receive(:evaluate_block).with(&some_block)
-      dummy_class.node('some name', &some_block)
+      KnifeSous::Node.should_receive(:new).with('some name', {config: 'stuff'})
+      dummy_class.node('some name', config: 'stuff' )
     end
 
     it "should add the Node to the collection" do
-      dummy_class.node('some name', &some_block)
+      dummy_class.node('some name')
       dummy_class.first.should be_a KnifeSous::Node
     end
   end

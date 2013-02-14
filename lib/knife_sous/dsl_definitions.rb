@@ -20,9 +20,8 @@ module KnifeSous
       children << namespace
     end
 
-    def node(name, &block)
-      node = Node.new(name)
-      node.evaluate_block(&block)
+    def node(name, args={})
+      node = Node.new(name, args)
       children << node
     end
   end
