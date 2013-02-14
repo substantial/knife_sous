@@ -6,6 +6,10 @@ class Chef
     class SousCook < Knife
       include KnifeSous::ProcessorCommand
 
+      deps do
+        require 'chef/knife/solo_cook'
+      end
+
       banner "knife sous cook [NAMESPACE] NODE"
 
       def run
@@ -15,6 +19,22 @@ class Chef
       end
 
       def cook_target(target)
+        if target.is_a? KnifeSous::Namespace
+          target.each do |item|
+            cook_target(item)
+          end
+        else
+          solo_cook_node(target)
+        end
+      end
+
+      def solo_cook_node(node)
+        solo_cook_command = Chef::Knife::SoloCook.new
+        solo_cook_command.config[:ssh_config] = node.ssh_config
+        solo_cook_command.config[:node_config] = node.node_config
+        solo_cook_command.config[:chef_node_name] = node.name
+        solo_cook_command.name_args << node.name
+        solo_cook_command.run
       end
 
       def search_for_target
