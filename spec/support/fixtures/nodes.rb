@@ -1,6 +1,7 @@
 namespace :production do
   namespace :web do
     node :nodetastic do
+      hostname "not_nodetastic"
       node_config "nodes/some_node.json"
       ssh_config "HostName: 12.34.56.789"
     end

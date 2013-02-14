@@ -23,11 +23,11 @@ describe KnifeSous::Node do
     end
   end
 
-  describe "#ssh_config" do
-    it "should set the ssh config" do
+  describe "#ssh_config_file" do
+    it "should set the ssh config file" do
       node = KnifeSous::Node.new('Node-Fuu')
-      node.ssh_config('node config stuff')
-      node.ssh_config.should == 'node config stuff'
+      node.ssh_config_file('node config stuff')
+      node.ssh_config_file.should == 'node config stuff'
     end
   end
 end
