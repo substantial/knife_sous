@@ -90,13 +90,16 @@ describe Chef::Knife::SousCook do
       Chef::Knife::SoloCook.stub(new: solo_cook_command)
       solo_cook_command.stub(:run)
       cmd.stub(configure_command: solo_cook_command)
+      node.evaluate_block do
+        node_config '/path/to/node/config'
+      end
     end
 
     it "should provide name to args and run" do
       solo_cook_command.should_receive(:run)
       cmd.solo_cook_node(node)
 
-      solo_cook_command.name_args.should == %w[nodetastic]
+      solo_cook_command.name_args.should == %w[nodetastic /path/to/node/config]
     end
   end
 
