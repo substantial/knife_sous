@@ -6,21 +6,26 @@ module KnifeSous
 
     attr_reader :name
 
-    METHOD_NAMES = %w[node_config ssh_config_file ssh_port ssh_user identity_file hostname user]
+    CONFIG_OPTIONS = %w[node_config ssh_config_file ssh_port ssh_user
+identity_file hostname user ssh_password]
 
     def initialize(name)
       @name = name.to_s
     end
 
-    def chef_node_name
-      @name
+    def node_name(arg = nil)
+      unless arg.nil?
+        @node_name = arg.to_s
+      else
+        @node_name || @name
+      end
     end
 
-    METHOD_NAMES.each do |method|
+    CONFIG_OPTIONS.each do |method|
       instance_var = "@#{method}".to_sym
       define_method method do |arg = nil|
         unless arg.nil?
-          instance_variable_set(instance_var, arg)
+          instance_variable_set(instance_var, arg.to_s)
         else
           instance_variable_get(instance_var)
         end
