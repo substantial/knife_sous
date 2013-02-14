@@ -1,10 +1,12 @@
 require 'chef/knife'
 require 'knife_sous/processor_command'
+require 'knife_sous/configure_command'
 
 class Chef
   class Knife
     class SousCook < Knife
       include KnifeSous::ProcessorCommand
+      include KnifeSous::ConfigureCommand
 
       deps do
         require 'chef/knife/solo_cook'
@@ -29,10 +31,7 @@ class Chef
       end
 
       def solo_cook_node(node)
-        solo_cook_command = Chef::Knife::SoloCook.new
-        solo_cook_command.config[:ssh_config] = node.ssh_config
-        solo_cook_command.config[:node_config] = node.node_config
-        solo_cook_command.config[:chef_node_name] = node.name
+        solo_cook_command = configure_command(Chef::Knife::SoloCook.new, node)
         solo_cook_command.name_args << node.name
         solo_cook_command.run
       end
