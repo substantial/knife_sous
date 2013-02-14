@@ -99,7 +99,7 @@ describe Chef::Knife::SousCook do
       solo_cook_command.should_receive(:run)
       cmd.solo_cook_node(node)
 
-      solo_cook_command.name_args.should == %w[nodetastic /path/to/node/config]
+      solo_cook_command.name_args.should == %w[host_ip /path/to/node/config]
     end
   end
 

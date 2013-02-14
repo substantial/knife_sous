@@ -33,7 +33,7 @@ class Chef
       def solo_cook_node(node)
         solo_cook_command = configure_command(Chef::Knife::SoloCook.new, node)
         Chef::Knife::SoloCook.load_deps
-        solo_cook_command.name_args << node.name
+        solo_cook_command.name_args << node.hostname
         solo_cook_command.name_args << node.node_config
         solo_cook_command.run
       end
