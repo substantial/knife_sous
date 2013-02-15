@@ -8,18 +8,18 @@
 #   end
 #   @vagrant_ssh_config_file.path
 # end
-# 
+#
 # def default_node_options
 #   {
 #     user: 'deploy',
 #     node_config: 'nodes/server.json'
 #   }
 # end
-# 
+#
 # node :vagrant, node_config: 'nodes/something.json',
 #   hostname: 'default',
 #   ssh_config: vagrant_ssh_config_file
-# 
+#
 # namespace :production do |prod|
 #   prod.node :node_awesome, default_options.merge!(hostname: '00.12.34.56')
 #   prod.namespace :web do |web|
@@ -29,4 +29,4 @@
 #       identity_file: "path/to/identity"
 #   end
 # end
-# 
+#
