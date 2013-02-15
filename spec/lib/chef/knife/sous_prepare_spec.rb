@@ -12,49 +12,6 @@ describe Chef::Knife::SousPrepare do
     let(:node_command) { command }
   end
 
-  describe "#run" do
-    let(:cmd) { command }
-    before do
-      cmd.stub(:prepare_target)
-    end
-
-    it "should check that the args exist" do
-      cmd.stub(:search_for_target)
-      cmd.should_receive(:check_args)
-      cmd.run
-    end
-
-    it "should search for the target" do
-      cmd.stub(:check_args)
-      cmd.should_receive(:search_for_target)
-      cmd.run
-    end
-
-    it "should perform Knife Solo Prepare on search result" do
-      cmd.stub(:check_args)
-      cmd.stub(search_for_target: "search results")
-      cmd.should_receive(:prepare_target).with("search results")
-      cmd.run
-    end
-  end
-
-  describe "#prepare_target" do
-    let(:cmd) { command }
-    it "should prepare target if its a Node" do
-      node = KnifeSous::Node.new('node')
-      cmd.should_receive(:solo_prepare_node).with(node)
-      cmd.prepare_target(node)
-    end
-
-    it "should prepare each child if target is Namespace" do
-      namespace = KnifeSous::Namespace.new('namespace')
-      namespace << 'child1' << 'child2'
-      cmd.should_receive(:solo_prepare_node).with('child1')
-      cmd.should_receive(:solo_prepare_node).with('child2')
-      cmd.prepare_target(namespace)
-    end
-  end
-
   describe "#solo_prepare_node" do
     let(:node) { KnifeSous::Node.new('nodetastic') }
     let(:cmd) { command }

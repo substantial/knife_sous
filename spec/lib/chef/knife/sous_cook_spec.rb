@@ -9,54 +9,17 @@ describe Chef::Knife::SousCook do
     end
   end
 
+  describe "#check_args" do
+    it "should print error, show usage and exit if no args are passed in" do
+      cmd = command
+      cmd.ui.should_receive(:fatal).with("You need to specificy a node or namespace")
+      cmd.should_receive(:show_usage)
+      lambda { cmd.check_args}.should raise_error SystemExit
+    end
+  end
+
   it_should_behave_like "a node command" do
     let(:node_command) { command }
-  end
-
-  describe "#run" do
-    let(:cmd) { command }
-
-    before do
-      cmd.stub(:cook_target)
-    end
-
-    it "should check that the args exist" do
-      cmd.stub(:search_for_target)
-      cmd.should_receive(:check_args)
-      cmd.run
-    end
-
-    it "should search for the target" do
-      cmd.stub(:check_args)
-      cmd.should_receive(:search_for_target)
-
-      cmd.run
-    end
-
-    it "should perform Knife Solo Cook on search result" do
-      cmd.stub(:check_args)
-      cmd.stub(search_for_target: "search results")
-      cmd.should_receive(:cook_target).with("search results")
-      cmd.run
-    end
-  end
-
-  describe "#cook_target" do
-    it "should cook target if its a Node" do
-      node = KnifeSous::Node.new('node')
-      cmd = command
-      cmd.should_receive(:solo_cook_node).with(node)
-      cmd.cook_target(node)
-    end
-
-    it "should cook each child if target is Namespace" do
-      cmd = command
-      namespace = KnifeSous::Namespace.new('namespace')
-      namespace << 'child1' << 'child2'
-      cmd.should_receive(:solo_cook_node).with('child1')
-      cmd.should_receive(:solo_cook_node).with('child2')
-      cmd.cook_target(namespace)
-    end
   end
 
   describe "#solo_cook_node" do

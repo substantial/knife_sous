@@ -16,22 +16,6 @@ class Chef
 
       banner "knife sous cook [NAMESPACE] NODE"
 
-      def run
-        check_args
-        search_result = search_for_target
-        cook_target(search_result)
-      end
-
-      def cook_target(target)
-        if target.is_a? KnifeSous::Namespace
-          target.each do |item|
-            cook_target(item)
-          end
-        else
-          solo_cook_node(target)
-        end
-      end
-
       def solo_cook_node(node)
         solo_cook_command = configure_command(Chef::Knife::SoloCook.new, node)
         Chef::Knife::SoloCook.load_deps
@@ -39,6 +23,8 @@ class Chef
         solo_cook_command.name_args << node.node_config
         solo_cook_command.run
       end
+
+      alias_method :solo_command, :solo_cook_node
     end
   end
 end
