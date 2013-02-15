@@ -21,7 +21,7 @@ describe Chef::Knife::SousList do
     it "should output presented nodes" do
       cmd = command
       cmd.config[:node_manifest_file] = 'spec/support/fixtures/nodes.rb'
-      cmd.ui.should_receive(:output).with('pretty, presented nodes')
+      cmd.ui.should_receive(:output).with("production node_awesome\nproduction web nodetastic\nvagrant\n")
       cmd.present_nodes
     end
   end
