@@ -1,8 +1,5 @@
-require 'knife_sous/processor_command'
-
 module KnifeSous
   module NodeCommand
-    extend KnifeSous::ProcessorCommand
 
     def search_for_target
       result = search(name_args)
