@@ -9,9 +9,11 @@ module KnifeSous
     end
 
     def present
-      nodes = @namespace.name
+      return @namespace.name if @namespace.empty?
+
+      nodes = ""
       @namespace.each do |child|
-        nodes = "#{nodes} #{presenter(child).present}"
+        nodes << "#{@namespace.name} #{presenter(child).present}".lstrip
       end
       nodes
     end

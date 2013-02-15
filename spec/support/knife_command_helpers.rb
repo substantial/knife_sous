@@ -4,6 +4,7 @@ module KnifeCommandHelpers
     command = cmd_class.new(args)
     command.ui.stub(:msg)
     command.ui.stub(:err)
+    command.stub(:show_usage)
     command
   end
 end
