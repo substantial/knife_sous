@@ -40,7 +40,7 @@ shared_examples_for "a node command" do
       node_command.run
     end
 
-    it "should perform Knife Solo Prepare on search result" do
+    it "should process result" do
       node_command.stub(search_for_target: "search results")
       node_command.should_receive(:process_result).with("search results")
       node_command.run
