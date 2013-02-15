@@ -23,21 +23,17 @@ Node configuration is done in `nodes/nodes.rb`. It uses a DSL similar to Rake.
 You can namespace your nodes however you want. Example `nodes.rb`:
 
 ```rb
-namespace :production do
-  namespace :web do
-    node :nodetastic do
-      node_config 'nodes/some_node.json'
-      ssh_config <<-TEXT
-      HostName: 12.34.56.789
-      TEXT
+namespace :production do |prod|
+  prod.namespace :web do |web|
+    web.node :nodetastic, node_config: 'nodes/some_node.json', hostname: 12.34.56.78
     end
+  end
+  prod.namespace :db do |db|
+    db.node :database_node, node_config: 'nodes/database.json', hostname: 123.456.78
   end
 end
 
-node :vagrant do |n|
-  n.node_config 'nodes/some_node.json'
-  n.ssh_config `vagrant ssh-config`
-end
+node :node_foo, node_config:'nodes/some_node.json'
 
 ```
 
