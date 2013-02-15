@@ -16,6 +16,18 @@ describe KnifeSous::Node do
     end
   end
 
+  describe "#node_name" do
+    it "should set the node name" do
+      node = KnifeSous::Node.new('some node', node_name: 'node_tastic')
+      node.node_name.should == 'node_tastic'
+    end
+
+    it "should default to the node name" do
+      node = KnifeSous::Node.new('some node')
+      node.node_name.should == 'some node'
+    end
+  end
+
   describe "#update_config" do
     it "should merge config options" do
      node =  KnifeSous::Node.new(:node_tastic, foo: 'bar', baz: 'stuff')
@@ -37,6 +49,14 @@ describe KnifeSous::Node do
 
     it "should return nil if config doesn't exist" do
       KnifeSous::Node.new(:node_tastic).foo_bar.should == nil
+    end
+  end
+
+  describe "#convert_aliases" do
+    it "should convert keys to their alias defined by #config_aliases" do
+      node = KnifeSous::Node.new(:foo)
+      node.stub(config_aliases: {foo: :bar})
+      node.convert_aliases(foo: 'baz').should == { bar: 'baz'}
     end
   end
 end
