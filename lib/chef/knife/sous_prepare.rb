@@ -22,8 +22,22 @@ class Chef
         prepare_target(search_result)
       end
 
-      def prepare_target(search_result)
+      def prepare_target(target)
+        if target.is_a? KnifeSous::Namespace
+          target.each do |item|
+            prepare_target(item)
+          end
+        else
+          solo_prepare_node(target)
+        end
+      end
 
+      def solo_prepare_node(node)
+        solo_cook_command = configure_command(Chef::Knife::SoloPrepare.new, node)
+        Chef::Knife::SoloPrepare.load_deps
+        solo_cook_command.name_args << node.hostname
+        solo_cook_command.name_args << node.node_config
+        solo_cook_command.run
       end
     end
   end
