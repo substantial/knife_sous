@@ -13,10 +13,6 @@ class Chef
         present_nodes
       end
 
-      def root_namespace
-        @root_namespace ||= process_config
-      end
-
       def present_nodes
         ui.output(KnifeSous::NamespacePresenter.new(root_namespace).present)
       end
