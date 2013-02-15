@@ -1,6 +1,6 @@
 # Knife Sous
 
-A Chef Knife plugin which uses a Rake-esq DSL to configure and manager
+A Chef Knife plugin which uses a DSL to configure and manage
 [knife-solo](http://matschaffer.github.com/knife-solo/) nodes.
 
 ## Usage
