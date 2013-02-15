@@ -21,6 +21,10 @@ class Chef
         search_result = search_for_target
         prepare_target(search_result)
       end
+
+      def prepare_target(search_result)
+
+      end
     end
   end
 end
