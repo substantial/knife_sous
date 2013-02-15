@@ -1,4 +1,4 @@
-def default_options(node)
+def default_options
   {
     node_config: "nodes/some_node.json",
     ssh_port: 22,
