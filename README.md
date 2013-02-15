@@ -13,11 +13,9 @@ Or add this to your Gemfile if you use bundler:
 
     gem 'knife_sous'
 
-Run `knife sous init` to place a sample `nodes.rb` under `nodes/nodes.rb`
+Having the gem installed will add Knife subcommands. Run `knife sous` with no
+arguments to see a list of available commands.
 
-Run `knife sous list` to display nodes defined in `nodes/nodes.rb`
-
-Run `knife sous cook` to run knife solo on specified node or namespace
 
 ## Configure
 
