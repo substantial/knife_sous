@@ -24,5 +24,6 @@ manage knife solo nodes. Run knife solo commands on one or multiple nodes.}
   s.add_development_dependency "rake", "~> 10.0.0"
   s.add_development_dependency "bundler", "~> 1.1"
   s.add_dependency "knife-solo", "~> 0.2.0"
+  s.add_dependency "parallel", "~> 0.6.2"
 end
 

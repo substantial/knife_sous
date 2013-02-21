@@ -3,6 +3,7 @@ PATH
   specs:
     knife_sous (0.0.1)
       knife-solo (~> 0.2.0)
+      parallel (~> 0.6.2)
 
 GEM
   remote: http://rubygems.org/
@@ -70,6 +71,7 @@ GEM
       mixlib-shellout
       systemu
       yajl-ruby
+    parallel (0.6.2)
     pry (0.9.11.4)
       coderay (~> 1.0.5)
       method_source (~> 0.8)

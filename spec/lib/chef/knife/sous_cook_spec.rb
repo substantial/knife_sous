@@ -9,15 +9,6 @@ describe Chef::Knife::SousCook do
     end
   end
 
-  describe "#check_args" do
-    it "should print error, show usage and exit if no args are passed in" do
-      cmd = command
-      cmd.ui.should_receive(:fatal).with("You need to specificy a node or namespace")
-      cmd.should_receive(:show_usage)
-      lambda { cmd.check_args}.should raise_error SystemExit
-    end
-  end
-
   it_should_behave_like "a node command" do
     let(:node_command) { command }
   end
