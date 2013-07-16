@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.email       = "shaun@substantail.com"
 
   s.name        = 'knife_sous'
-  s.version     = "0.0.1"
+  s.version     = "0.1.0pre"
   s.description = %q{Knife plugin for managing knife-solo nodes}
   s.summary     = %q{A Chef Knife plugin which uses a DSL to configure and
 manage knife solo nodes. Run knife solo commands on one or multiple nodes.}
@@ -23,6 +23,6 @@ manage knife solo nodes. Run knife solo commands on one or multiple nodes.}
   s.add_development_dependency "rspec", "~> 2.12.0"
   s.add_development_dependency "rake", "~> 10.0.0"
   s.add_development_dependency "bundler", "~> 1.1"
-  s.add_dependency "knife-solo", "~> 0.2.0"
+  s.add_dependency "knife-solo", "~> 0.3.0.pre5"
 end
 
