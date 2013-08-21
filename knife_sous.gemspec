@@ -20,9 +20,9 @@ manage knife solo nodes. Run knife solo commands on one or multiple nodes.}
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "rspec", "~> 2.12.0"
-  s.add_development_dependency "rake", "~> 10.0.0"
-  s.add_development_dependency "bundler", "~> 1.1"
-  s.add_dependency "knife-solo", "~> 0.3.0.pre5"
+  s.add_development_dependency "rspec", "~> 2.14.1"
+  s.add_development_dependency "rake", "~> 10.1.0"
+  s.add_development_dependency "bundler", "~> 1.3.5"
+  s.add_dependency "knife-solo", "~> 0.3.0"
 end
 
