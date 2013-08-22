@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.email       = "shaun@substantail.com"
 
   s.name        = 'knife_sous'
-  s.version     = "0.1.0pre"
+  s.version     = "0.2.0"
   s.description = %q{Knife plugin for managing knife-solo nodes}
   s.summary     = %q{A Chef Knife plugin which uses a DSL to configure and
 manage knife solo nodes. Run knife solo commands on one or multiple nodes.}
