@@ -15,6 +15,7 @@ module KnifeSous
 
     def update_config(other_config={})
       config = convert_aliases(normalize_hash(other_config))
+      @config[:chef_node_name] = @name
       @config.merge!(config)
     end
 
@@ -26,10 +27,6 @@ module KnifeSous
         end
       end
       config_hash
-    end
-
-    def node_name
-      @config[:node_name] || @name
     end
 
     def method_missing(method_name, *args, &block)

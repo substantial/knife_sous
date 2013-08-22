@@ -5,4 +5,3 @@ gemspec
 gem 'guard'
 gem 'guard-rspec'
 gem 'pry'
-

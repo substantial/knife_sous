@@ -12,19 +12,7 @@ describe KnifeSous::Node do
 
     it "should accept config arguments as a hash" do
       options_hash = {ssh_config: 'stuff', other_something: 'foo' }
-      KnifeSous::Node.new(:node_tastic, options_hash).config.should == options_hash
-    end
-  end
-
-  describe "#node_name" do
-    it "should set the node name" do
-      node = KnifeSous::Node.new('some node', node_name: 'node_tastic')
-      node.node_name.should == 'node_tastic'
-    end
-
-    it "should default to the node name" do
-      node = KnifeSous::Node.new('some node')
-      node.node_name.should == 'some node'
+      KnifeSous::Node.new(:node_tastic, options_hash).config.should == options_hash.merge!(chef_node_name: "node_tastic")
     end
   end
 
@@ -32,13 +20,14 @@ describe KnifeSous::Node do
     it "should merge config options" do
      node =  KnifeSous::Node.new(:node_tastic, foo: 'bar', baz: 'stuff')
      node.update_config(baz: 'new stuff')
-     node.config.should == { foo: 'bar', baz: 'new stuff' }
+     node.config.should == { foo: 'bar', baz: 'new stuff', chef_node_name: 'node_tastic' }
     end
   end
 
   describe "config hash" do
     it "should sanitize hash keys" do
-      KnifeSous::Node.new(:node_tastic, 'fOO-BAr' => 'baz').config.keys.should =~ [:foo_bar]
+      node = KnifeSous::Node.new(:node_tastic, 'fOO-BAr' => 'baz')
+      node.config.keys.should include :foo_bar
     end
   end
 
